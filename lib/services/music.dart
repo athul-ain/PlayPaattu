@@ -17,6 +17,13 @@ class MusicService extends ChangeNotifier {
     notifyListeners();
   }
 
+  SongModel? _nowPlayingSong;
+  SongModel? get nowPlayingSong => _nowPlayingSong;
+  setNowPlayingSong(SongModel thisSong) {
+    _nowPlayingSong = thisSong;
+    notifyListeners();
+  }
+
   String? _nowSongID;
   String? get nowSongID => _nowSongID;
   setNowSongID(id) {
@@ -24,16 +31,18 @@ class MusicService extends ChangeNotifier {
     notifyListeners();
   }
 
-  playSong(SongModel songnow) async {
+  playSong(SongModel thisSong) async {
+    setNowPlayingSong(thisSong);
     await audioPlayer
-        .play(songnow.data, volume: 1, isLocal: true, stayAwake: true)
+        .play(thisSong.data, volume: 1, isLocal: true, stayAwake: true)
         .then((value) {
       _isPlaying = true;
       notifyListeners();
     });
   }
 
-  pauseSong(SongModel nowsong) async {
+  pauseSong(SongModel thisSong) async {
+    setNowPlayingSong(thisSong);
     await audioPlayer.pause().then((value) {
       _isPlaying = false;
     });

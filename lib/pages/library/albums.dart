@@ -37,13 +37,16 @@ class _AlbumsLibraryPageState extends State<AlbumsLibraryPage> {
       radius: Radius.circular(5),
       controller: controller,
       isAlwaysShown: true,
-      child: GridView.count(
-        controller: controller,
-        crossAxisCount: 2,
-        childAspectRatio: 0.8,
-        children: recentAlbums
-            .map((e) => AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
-            .toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          controller: controller,
+          crossAxisCount: 2,
+          childAspectRatio: 0.8,
+          children: recentAlbums
+              .map((e) => AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
+              .toList(),
+        ),
       ),
     );
   }

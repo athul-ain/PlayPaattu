@@ -20,14 +20,15 @@ class _SongsLibraryPageState extends State<SongsLibraryPage> {
 
   getAllSongs() async {
     int _sdkVersion = await OnAudioQuery().getDeviceSDK();
-    setState(() => isLoading = true);
+    if (mounted) setState(() => isLoading = true);
     var _audios = await OnAudioQuery().queryAudios();
 
-    setState(() {
-      sdkVersion = _sdkVersion;
-      allSongs = _audios;
-      isLoading = false;
-    });
+    if (mounted)
+      setState(() {
+        sdkVersion = _sdkVersion;
+        allSongs = _audios;
+        isLoading = false;
+      });
   }
 
   @override

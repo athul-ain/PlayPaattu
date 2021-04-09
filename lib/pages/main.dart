@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:play_paattu/services/music.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'favorites.dart';
 import 'playlists.dart';
@@ -14,6 +19,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int sdkVersion = 0;
   int selectedPage = 0;
   List mainPages = [
     HomePage(),
@@ -23,20 +29,42 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
+  void initState() {
+    getSdkVersion();
+    super.initState();
+  }
+
+  getSdkVersion() async {
+    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
+    if (mounted) setState(() => sdkVersion = _sdkVersion);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SongModel? currentSong = Provider.of<MusicService>(context).nowPlayingSong;
+    bool isPlaying = Provider.of<MusicService>(context).isPlaying;
+
     return Container(
       color: Theme.of(context).canvasColor,
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
-        body: PageTransitionSwitcher(
-          transitionBuilder: (child, primaryAnimation, secondaryAnimation) =>
-              FadeThroughTransition(
-            animation: primaryAnimation,
-            secondaryAnimation: secondaryAnimation,
-            child: child,
-          ),
-          child: mainPages[selectedPage],
+        body: Column(
+          children: [
+            Expanded(
+              child: PageTransitionSwitcher(
+                transitionBuilder:
+                    (child, primaryAnimation, secondaryAnimation) =>
+                        FadeThroughTransition(
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                ),
+                child: mainPages[selectedPage],
+              ),
+            ),
+            if (currentSong != null) Container(height: 58)
+          ],
         ),
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -226,10 +254,87 @@ class _MainScreenState extends State<MainScreen> {
           unselectedItemColor: Theme.of(context).textTheme.caption!.color,
           type: BottomNavigationBarType.fixed,
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.music_note_outlined),
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {},
+        //   child: Icon(Icons.music_note_outlined),
+        // ),
+        bottomSheet: currentSong == null
+            ? null
+            : Container(
+                color: Theme.of(context).cardColor,
+                height: 58,
+                child: Row(
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAlias,
+                      child: sdkVersion >= 29
+                          ? QueryArtworkWidget(
+                              artworkBorder: BorderRadius.circular(0),
+                              id: currentSong.id,
+                              type: ArtworkType.AUDIO,
+                              artworkQuality: FilterQuality.low,
+                              nullArtworkWidget: Container(
+                                width: 50,
+                                height: 50,
+                                color: Colors.black26,
+                                child: Icon(
+                                  Icons.album,
+                                  color: Colors.grey[700],
+                                  size: 30,
+                                ),
+                              ),
+                            )
+                          : currentSong.artwork == null
+                              ? Container(
+                                  width: 50,
+                                  height: 50,
+                                  color: Colors.black26,
+                                  child: Icon(
+                                    Icons.album,
+                                    color: Colors.grey[700],
+                                    size: 30,
+                                  ),
+                                )
+                              : Image.file(
+                                  File(currentSong.artwork!),
+                                ),
+                    ),
+                    Container(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${currentSong.title}",
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          Container(height: 3),
+                          Text(
+                            "${currentSong.artist}",
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                        icon: Icon(
+                          isPlaying
+                              ? Icons.pause_outlined
+                              : Icons.play_arrow_outlined,
+                        ),
+                        onPressed: () {
+                          if (isPlaying) {
+                            Provider.of<MusicService>(context, listen: false)
+                                .pauseSong(currentSong);
+                          } else {
+                            Provider.of<MusicService>(context, listen: false)
+                                .resumeSong();
+                          }
+                        })
+                  ],
+                ),
+              ),
       ),
     );
   }

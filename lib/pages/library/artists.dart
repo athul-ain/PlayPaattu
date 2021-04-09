@@ -37,70 +37,87 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
       radius: Radius.circular(5),
       controller: controller,
       isAlwaysShown: true,
-      child: GridView.count(
-        controller: controller,
-        crossAxisCount: 2,
-        childAspectRatio: 0.8,
-        children: recentArtists
-            .map((thisArtist) => Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Card(
-                    margin: EdgeInsets.all(0),
-                    clipBehavior: Clip.antiAlias,
-                    child: Stack(
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Expanded(
-                                child: sdkVersion >= 29
-                                    ? QueryArtworkWidget(
-                                        id: thisArtist.id,
-                                        type: ArtworkType.ALBUM,
-                                      )
-                                    : Ink.image(
-                                        image:
-                                            FileImage(File(thisArtist.artwork)),
-                                        fit: BoxFit.cover)
-                                // : Container(
-                                //     color: Colors.black26,
-                                //     child: Padding(
-                                //       padding: const EdgeInsets.all(18.0),
-                                //       child: Icon(
-                                //         Icons.person_rounded,
-                                //         size: 88,
-                                //         color:
-                                //             Theme.of(context).iconTheme.color,
-                                //       ),
-                                //     ),
-                                //   ),
-                                ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    thisArtist.artistName,
-                                    overflow: TextOverflow.fade,
-                                    softWrap: false,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.count(
+          controller: controller,
+          crossAxisCount: 2,
+          childAspectRatio: 0.8,
+          children: recentArtists
+              .map((thisArtist) => Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: Card(
+                      margin: EdgeInsets.all(0),
+                      clipBehavior: Clip.antiAlias,
+                      child: Stack(
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Expanded(
+                                  child: sdkVersion >= 29
+                                      ? QueryArtworkWidget(
+                                          id: thisArtist.id,
+                                          type: ArtworkType.ALBUM,
+                                          nullArtworkWidget: Container(
+                                            color: Colors.black26,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(18.0),
+                                              child: Icon(
+                                                Icons.person_rounded,
+                                                size: 88,
+                                                color: Theme.of(context)
+                                                    .iconTheme
+                                                    .color,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : Ink.image(
+                                          image: FileImage(
+                                              File(thisArtist.artwork)),
+                                          fit: BoxFit.cover)
+                                  // : Container(
+                                  //     color: Colors.black26,
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.all(18.0),
+                                  //       child: Icon(
+                                  //         Icons.person_rounded,
+                                  //         size: 88,
+                                  //         color:
+                                  //             Theme.of(context).iconTheme.color,
+                                  //       ),
+                                  //     ),
+                                  //   ),
                                   ),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      thisArtist.artistName,
+                                      overflow: TextOverflow.fade,
+                                      softWrap: false,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        InkWell(
-                          splashColor: Colors.black38,
-                          onTap: () {},
-                        ),
-                      ],
+                            ],
+                          ),
+                          InkWell(
+                            splashColor: Colors.black38,
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ))
-            .toList(),
+                  ))
+              .toList(),
+        ),
       ),
     );
   }

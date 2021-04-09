@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -41,6 +42,27 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Theme.of(context).canvasColor.withOpacity(0.4),
+                      Theme.of(context).canvasColor.withOpacity(0.2),
+                      Theme.of(context).canvasColor.withOpacity(0.1),
+                      Theme.of(context).canvasColor.withOpacity(0.05),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(30)),
+              child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Theme.of(context).textTheme.caption!.color,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+            ),
             expandedHeight: MediaQuery.of(context).size.width < 360
                 ? MediaQuery.of(context).size.width
                 : 360,
@@ -58,7 +80,8 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                       end: Alignment.center,
                       colors: [Colors.black12, Colors.transparent],
                     ).createShader(
-                        Rect.fromLTRB(0, 0, rect.width, rect.height));
+                      Rect.fromLTRB(0, 0, rect.width, rect.height),
+                    );
                   },
                   blendMode: BlendMode.luminosity,
                   child: Container(

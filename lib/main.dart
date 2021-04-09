@@ -9,13 +9,11 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(MyApp());
 
-  //SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.light,
     systemNavigationBarColor: Colors.transparent,
     systemNavigationBarDividerColor: Colors.transparent,
-    //systemNavigationBarIconBrightness: Brightness.dark,
   ));
 }
 
