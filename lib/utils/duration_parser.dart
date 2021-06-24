@@ -1,6 +1,6 @@
-String durationToMinutesSeconds(String _duration) {
+String durationToMinutesSeconds(int _duration) {
   String data;
-  Duration duration = Duration(milliseconds: int.parse(_duration));
+  Duration duration = Duration(milliseconds: _duration);
 
   int minutes = duration.inMinutes;
   int seconds = (duration.inSeconds) - (minutes * 60);

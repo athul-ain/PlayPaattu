@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:play_paattu/pages/album_detail.dart';
@@ -25,35 +23,22 @@ class AlbumCartWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Expanded(
-                  child: sdkVersion >= 29
-                      ? QueryArtworkWidget(
-                          id: int.parse(thisAlbum.albumId),
-                          type: ArtworkType.ALBUM,
-                          artworkQuality: FilterQuality.medium,
-                          artworkBorder: BorderRadius.circular(0),
-                          nullArtworkWidget: Container(
-                            color: Colors.black26,
-                            child: Icon(
-                              Icons.album,
-                              color: Colors.grey[700],
-                              size: 133,
-                            ),
-                          ),
-                        )
-                      : thisAlbum.artwork == null
-                          ? Container(
-                              color: Colors.black26,
-                              child: Icon(
-                                Icons.album,
-                                color: Colors.grey[700],
-                                size: 133,
-                              ),
-                            )
-                          : Image(
-                              image: FileImage(
-                                File(thisAlbum.artwork!),
-                              ),
-                            ),
+                  child: QueryArtworkWidget(
+                    id: thisAlbum.albumId,
+                    type: ArtworkType.ALBUM,
+                    artworkQuality: FilterQuality.medium,
+                    artworkBorder: BorderRadius.circular(0),
+                    nullArtworkWidget: Container(
+                      color: Colors.black26,
+                      child: Icon(
+                        Icons.album,
+                        color: Colors.grey[700],
+                        size: 133,
+                      ),
+                    ),
+                    artwork: thisAlbum.artwork,
+                    deviceSDK: sdkVersion,
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),

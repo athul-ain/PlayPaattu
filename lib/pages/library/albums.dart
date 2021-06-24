@@ -19,13 +19,13 @@ class _AlbumsLibraryPageState extends State<AlbumsLibraryPage> {
   }
 
   Future<void> getRecentAlbums() async {
-    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
+    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
     List<AlbumModel> _recentAlbums = await OnAudioQuery().queryAlbums();
 
     if (mounted)
       setState(() {
-        sdkVersion = _sdkVersion;
+        sdkVersion = deviceInfo.sdk;
         recentAlbums = _recentAlbums;
       });
   }

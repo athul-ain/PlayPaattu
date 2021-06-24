@@ -17,13 +17,13 @@ class _GenreLibraryPageState extends State<GenreLibraryPage> {
   }
 
   Future<void> getGenreAlbums() async {
-    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
+    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
     List<GenreModel> _genres = await OnAudioQuery().queryGenres();
 
     if (mounted)
       setState(() {
-        sdkVersion = _sdkVersion;
+        sdkVersion = deviceInfo.sdk;
         genres = _genres;
       });
   }

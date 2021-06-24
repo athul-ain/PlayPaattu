@@ -1,6 +1,4 @@
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:play_paattu/widgets/song_list_tile.dart';
@@ -24,14 +22,14 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
   }
 
   Future<void> getSongs() async {
-    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
+    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
     List<SongModel> _songs = await OnAudioQuery()
-        .queryAudiosFrom(AudiosFromType.ALBUM, widget.thisAlbum.albumName);
+        .queryAudiosFrom(AudiosFromType.ALBUM_ID, widget.thisAlbum.albumId);
 
     if (mounted)
       setState(() {
-        sdkVersion = _sdkVersion;
+        sdkVersion = deviceInfo.sdk;
         songs = _songs;
       });
   }
@@ -86,35 +84,22 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                   blendMode: BlendMode.luminosity,
                   child: Container(
                     padding: EdgeInsets.all(0),
-                    child: sdkVersion >= 29
-                        ? QueryArtworkWidget(
-                            artworkBorder: BorderRadius.circular(0),
-                            id: int.parse(widget.thisAlbum.albumId),
-                            type: ArtworkType.ALBUM,
-                            artworkQuality: FilterQuality.high,
-                            nullArtworkWidget: Container(
-                              color: Colors.black26,
-                              child: Icon(
-                                Icons.album,
-                                color: Colors.grey[700],
-                                size: 188,
-                              ),
-                            ),
-                          )
-                        : widget.thisAlbum.artwork != null
-                            ? Image(
-                                image: FileImage(
-                                  File(widget.thisAlbum.artwork!),
-                                ),
-                              )
-                            : Container(
-                                color: Colors.black26,
-                                child: Icon(
-                                  Icons.album,
-                                  color: Colors.grey[700],
-                                  size: 133,
-                                ),
-                              ),
+                    child: QueryArtworkWidget(
+                      artworkBorder: BorderRadius.circular(0),
+                      id: widget.thisAlbum.albumId,
+                      type: ArtworkType.ALBUM,
+                      artworkQuality: FilterQuality.high,
+                      nullArtworkWidget: Container(
+                        color: Colors.black26,
+                        child: Icon(
+                          Icons.album,
+                          color: Colors.grey[700],
+                          size: 188,
+                        ),
+                      ),
+                      artwork: widget.thisAlbum.artwork,
+                      deviceSDK: sdkVersion,
+                    ),
                   ),
                 ),
               ),

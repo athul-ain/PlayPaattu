@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:play_paattu/services/music.dart';
@@ -32,41 +29,28 @@ class SongListTileWidget extends StatelessWidget {
             )
           : Card(
               clipBehavior: Clip.antiAlias,
-              child: sdkVersion >= 29
-                  ? QueryArtworkWidget(
-                      artworkBorder: BorderRadius.circular(0),
-                      id: thisSong.id,
-                      type: ArtworkType.AUDIO,
-                      artworkQuality: FilterQuality.low,
-                      nullArtworkWidget: Container(
-                        width: 50,
-                        height: 50,
-                        color: Colors.black26,
-                        child: Icon(
-                          Icons.album,
-                          color: Colors.grey[700],
-                          size: 30,
-                        ),
-                      ),
-                    )
-                  : thisSong.artwork == null
-                      ? Container(
-                          width: 50,
-                          height: 50,
-                          color: Colors.black26,
-                          child: Icon(
-                            Icons.album,
-                            color: Colors.grey[700],
-                            size: 30,
-                          ),
-                        )
-                      : Image.file(
-                          File(thisSong.artwork!),
-                        ),
+              child: QueryArtworkWidget(
+                artworkBorder: BorderRadius.circular(0),
+                id: thisSong.id,
+                type: ArtworkType.AUDIO,
+                artworkQuality: FilterQuality.low,
+                nullArtworkWidget: Container(
+                  width: 50,
+                  height: 50,
+                  color: Colors.black26,
+                  child: Icon(
+                    Icons.album,
+                    color: Colors.grey[700],
+                    size: 30,
+                  ),
+                ),
+                artwork: thisSong.artwork,
+                deviceSDK: sdkVersion,
+              ),
             ),
       onTap: () {
         print("playing ${thisSong.data}");
-        Provider.of<MusicService>(context, listen: false).playSong(thisSong);
+        //Provider.of<MusicService>(context, listen: false).playSong(thisSong);
       },
     );
   }

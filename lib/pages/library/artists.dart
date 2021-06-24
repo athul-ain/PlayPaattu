@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
@@ -19,13 +18,13 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
   }
 
   Future<void> getRecentArtists() async {
-    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
+    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
     List<ArtistModel> _recentArtists = await OnAudioQuery().queryArtists();
 
     if (mounted)
       setState(() {
-        sdkVersion = _sdkVersion;
+        sdkVersion = deviceInfo.sdk;
         recentArtists = _recentArtists;
       });
   }
@@ -55,42 +54,25 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Expanded(
-                                  child: sdkVersion >= 29
-                                      ? QueryArtworkWidget(
-                                          id: thisArtist.id,
-                                          type: ArtworkType.ALBUM,
-                                          nullArtworkWidget: Container(
-                                            color: Colors.black26,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(18.0),
-                                              child: Icon(
-                                                Icons.person_rounded,
-                                                size: 88,
-                                                color: Theme.of(context)
-                                                    .iconTheme
-                                                    .color,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      : Ink.image(
-                                          image: FileImage(
-                                              File(thisArtist.artwork)),
-                                          fit: BoxFit.cover)
-                                  // : Container(
-                                  //     color: Colors.black26,
-                                  //     child: Padding(
-                                  //       padding: const EdgeInsets.all(18.0),
-                                  //       child: Icon(
-                                  //         Icons.person_rounded,
-                                  //         size: 88,
-                                  //         color:
-                                  //             Theme.of(context).iconTheme.color,
-                                  //       ),
-                                  //     ),
-                                  //   ),
+                                child: QueryArtworkWidget(
+                                  id: thisArtist.id,
+                                  type: ArtworkType.ALBUM,
+                                  nullArtworkWidget: Container(
+                                    color: Colors.black26,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(18.0),
+                                      child: Icon(
+                                        Icons.person_rounded,
+                                        size: 88,
+                                        color:
+                                            Theme.of(context).iconTheme.color,
+                                      ),
+                                    ),
                                   ),
+                                  artwork: thisArtist.artwork,
+                                  deviceSDK: sdkVersion,
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(

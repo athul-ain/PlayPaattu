@@ -35,14 +35,16 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   getSdkVersion() async {
-    int _sdkVersion = await OnAudioQuery().getDeviceSDK();
-    if (mounted) setState(() => sdkVersion = _sdkVersion);
+    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
+    if (mounted) setState(() => sdkVersion = deviceInfo.sdk);
   }
 
   @override
   Widget build(BuildContext context) {
-    SongModel? currentSong = Provider.of<MusicService>(context).nowPlayingSong;
-    bool isPlaying = Provider.of<MusicService>(context).isPlaying;
+    SongModel? currentSong = null;
+    //Provider.of<MusicService>(context).nowPlayingSong;
+    bool isPlaying = false;
+    // Provider.of<MusicService>(context).isPlaying;
 
     return Container(
       color: Theme.of(context).canvasColor,
@@ -267,37 +269,24 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     Card(
                       clipBehavior: Clip.antiAlias,
-                      child: sdkVersion >= 29
-                          ? QueryArtworkWidget(
-                              artworkBorder: BorderRadius.circular(0),
-                              id: currentSong.id,
-                              type: ArtworkType.AUDIO,
-                              artworkQuality: FilterQuality.low,
-                              nullArtworkWidget: Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.black26,
-                                child: Icon(
-                                  Icons.album,
-                                  color: Colors.grey[700],
-                                  size: 30,
-                                ),
-                              ),
-                            )
-                          : currentSong.artwork == null
-                              ? Container(
-                                  width: 50,
-                                  height: 50,
-                                  color: Colors.black26,
-                                  child: Icon(
-                                    Icons.album,
-                                    color: Colors.grey[700],
-                                    size: 30,
-                                  ),
-                                )
-                              : Image.file(
-                                  File(currentSong.artwork!),
-                                ),
+                      child: QueryArtworkWidget(
+                        artworkBorder: BorderRadius.circular(0),
+                        id: currentSong.id,
+                        type: ArtworkType.AUDIO,
+                        artworkQuality: FilterQuality.low,
+                        nullArtworkWidget: Container(
+                          width: 50,
+                          height: 50,
+                          color: Colors.black26,
+                          child: Icon(
+                            Icons.album,
+                            color: Colors.grey[700],
+                            size: 30,
+                          ),
+                        ),
+                        artwork: currentSong.artwork,
+                        deviceSDK: sdkVersion,
+                      ),
                     ),
                     Container(width: 10),
                     Expanded(
@@ -324,13 +313,13 @@ class _MainScreenState extends State<MainScreen> {
                               : Icons.play_arrow_outlined,
                         ),
                         onPressed: () {
-                          if (isPlaying) {
-                            Provider.of<MusicService>(context, listen: false)
-                                .pauseSong(currentSong);
-                          } else {
-                            Provider.of<MusicService>(context, listen: false)
-                                .resumeSong();
-                          }
+                          // if (isPlaying) {
+                          //   Provider.of<MusicService>(context, listen: false)
+                          //       .pauseSong(currentSong);
+                          // } else {
+                          //   Provider.of<MusicService>(context, listen: false)
+                          //       .resumeSong();
+                          // }
                         })
                   ],
                 ),
