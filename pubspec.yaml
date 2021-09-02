@@ -24,15 +24,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-  on_audio_query: ^1.1.1
-  animations: ^2.0.0
-  shared_preferences: ^2.0.5
+  on_audio_query: ^1.2.0
+  animations: ^2.0.1
+  shared_preferences: ^2.0.6
   provider: ^5.0.0
-  share: ^2.0.1
-  url_launcher: ^6.0.3
-  package_info: ^2.0.0
-  audio_service: ^0.17.1
-  just_audio: ^0.8.0
+  share_plus: ^2.1.4
+  url_launcher: ^6.0.9
+  package_info: ^2.0.2
+  just_audio: ^0.9.5
+  just_audio_background: ^0.0.1-beta.1
 
 dev_dependencies:
   flutter_test:

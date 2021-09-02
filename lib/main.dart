@@ -1,14 +1,17 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:play_paattu/pages/main.dart';
 import 'package:play_paattu/utils/app_data.dart';
 import 'package:play_paattu/utils/theme.dart';
 import 'package:provider/provider.dart';
 
-import 'services/music.dart';
-
-void main() {
+Future<void> main() async {
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
   runApp(MyApp());
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -17,10 +20,6 @@ void main() {
     systemNavigationBarColor: Colors.transparent,
     systemNavigationBarDividerColor: Colors.transparent,
   ));
-}
-
-void _audioPlayerTaskEntrypoint() async {
-  AudioServiceBackground.run(() => AudioPlayerTask());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
             title: AppData.APP_NAME,
             theme: notifier.appTheme == AppTheme.dark ? dark : light,
             darkTheme: notifier.appTheme == AppTheme.auto ? dark : null,
-            home: AudioServiceWidget(child: MainScreen()),
+            home: MainScreen(),
           );
         },
       ),

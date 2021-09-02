@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:play_paattu/services/music.dart';
-import 'package:provider/provider.dart';
 import '../utils/duration_parser.dart';
 
 class SongListTileWidget extends StatelessWidget {
-  const SongListTileWidget({
+  SongListTileWidget({
     Key? key,
     required this.sdkVersion,
     required this.thisSong,
@@ -15,6 +15,8 @@ class SongListTileWidget extends StatelessWidget {
   final int sdkVersion;
   final SongModel thisSong;
   final int? index;
+
+  AudioPlayer player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,18 @@ class SongListTileWidget extends StatelessWidget {
             ),
       onTap: () {
         print("playing ${thisSong.data}");
-        //Provider.of<MusicService>(context, listen: false).playSong(thisSong);
+
+        AudioSource.uri(
+          Uri.parse(thisSong.data),
+          tag: MediaItem(
+            // Specify a unique ID for each media item:
+            id: '1',
+            // Metadata to display in the notification:
+            album: "Album name",
+            title: "Song name",
+            artUri: Uri.parse('https://example.com/albumart.jpg'),
+          ),
+        );
       },
     );
   }

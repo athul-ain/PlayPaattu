@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:play_paattu/services/music.dart';
-import 'package:provider/provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'favorites.dart';
 import 'playlists.dart';
 import 'home.dart';
@@ -79,17 +75,21 @@ class _MainScreenState extends State<MainScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                stops: [0.93, 0.93],
+                stops: [0.88, 0.95, 1],
                 colors: [
                   Theme.of(context).appBarTheme.color!,
-                  Colors.transparent
+                  Theme.of(context).appBarTheme.color!.withOpacity(0.5),
+                  Theme.of(context).appBarTheme.color!.withOpacity(0.1),
                 ],
               ),
             ),
           ),
           title: Card(
             clipBehavior: Clip.antiAlias,
-            elevation: 2,
+            elevation: 1.5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
             margin: EdgeInsets.only(top: 3),
             child: InkWell(
               onTap: () {
@@ -111,20 +111,21 @@ class _MainScreenState extends State<MainScreen> {
                   RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Theme.of(context)
-                                  .appBarTheme
-                                  .iconTheme!
-                                  .color),
-                          text: "Play "),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).appBarTheme.iconTheme!.color,
+                        ),
+                        text: "Play ",
+                      ),
                       TextSpan(
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Theme.of(context).primaryColor),
-                          text: "Paattu"),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        text: "Paattu",
+                      ),
                     ]),
                   ),
                   IconButton(
@@ -147,7 +148,7 @@ class _MainScreenState extends State<MainScreen> {
                     text: TextSpan(children: [
                       TextSpan(
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.w500,
                               color: Theme.of(context)
                                   .appBarTheme
@@ -156,7 +157,7 @@ class _MainScreenState extends State<MainScreen> {
                           text: "Play "),
                       TextSpan(
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.w500,
                               color: Theme.of(context).primaryColor),
                           text: "Paattu"),
@@ -178,16 +179,12 @@ class _MainScreenState extends State<MainScreen> {
                     Icon(
                       Icons.history_rounded,
                       size: 25,
-                      color: Theme.of(context).appBarTheme.iconTheme!.color,
+                      color: Theme.of(context).textTheme.button!.color,
                     ),
                     Padding(padding: EdgeInsets.symmetric(horizontal: 15)),
                     Text(
                       "Recents",
-                      style: TextStyle(
-                        fontSize: 15.5,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).appBarTheme.iconTheme!.color,
-                      ),
+                      style: Theme.of(context).textTheme.button,
                     )
                   ]),
                 ),
@@ -196,13 +193,11 @@ class _MainScreenState extends State<MainScreen> {
               ListTile(
                 title: Text(
                   "Settings",
-                  style: TextStyle(
-                    color: Theme.of(context).appBarTheme.iconTheme!.color,
-                  ),
+                  style: Theme.of(context).textTheme.button,
                 ),
                 leading: Icon(
                   Icons.settings_outlined,
-                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                  color: Theme.of(context).textTheme.button!.color,
                 ),
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => SettingsPage())),
@@ -210,13 +205,11 @@ class _MainScreenState extends State<MainScreen> {
               ListTile(
                 title: Text(
                   "Share",
-                  style: TextStyle(
-                    color: Theme.of(context).appBarTheme.iconTheme!.color,
-                  ),
+                  style: Theme.of(context).textTheme.button,
                 ),
                 leading: Icon(
                   Icons.share_outlined,
-                  color: Theme.of(context).appBarTheme.iconTheme!.color,
+                  color: Theme.of(context).textTheme.button!.color,
                 ),
                 onTap: () => Share.share(
                     'Hey, I have Found a new awesome Music Player App Play Paattu, Check it out on Play Store https://play.google.com/store/apps/details?id=app.paattu.play'),
@@ -256,10 +249,10 @@ class _MainScreenState extends State<MainScreen> {
           unselectedItemColor: Theme.of(context).textTheme.caption!.color,
           type: BottomNavigationBarType.fixed,
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () {},
-        //   child: Icon(Icons.music_note_outlined),
-        // ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.music_note_outlined),
+        ),
         bottomSheet: currentSong == null
             ? null
             : Container(

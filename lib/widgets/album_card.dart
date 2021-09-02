@@ -17,6 +17,9 @@ class AlbumCartWidget extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.all(3.8),
         clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Stack(
           children: <Widget>[
             Column(
@@ -29,7 +32,8 @@ class AlbumCartWidget extends StatelessWidget {
                     artworkQuality: FilterQuality.medium,
                     artworkBorder: BorderRadius.circular(0),
                     nullArtworkWidget: Container(
-                      color: Colors.black26,
+                      color: Colors.black12,
+                      //color: Colors.black26,
                       child: Icon(
                         Icons.album,
                         color: Colors.grey[700],
