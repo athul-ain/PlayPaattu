@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum AppTheme { dark, light, auto }
 
 ThemeData light = ThemeData(
-    primarySwatch: Colors.deepOrange,
-    accentColor: Colors.deepOrange,
-    brightness: Brightness.light,
-    backgroundColor: Colors.white,
-    appBarTheme: AppBarTheme(
-        brightness: Brightness.light,
-        color: Colors.white,
-        elevation: 1.5,
-        iconTheme: IconThemeData(color: Colors.grey[700]),
-        textTheme: TextTheme(
-            headline6: TextStyle(color: Colors.grey[700], fontSize: 20))),
-    navigationRailTheme:
-        NavigationRailThemeData(backgroundColor: Colors.white));
+  primarySwatch: Colors.deepOrange,
+  brightness: Brightness.light,
+  backgroundColor: Colors.white,
+  appBarTheme: AppBarTheme(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.dark,
+    ),
+    color: Colors.white,
+    elevation: 1.5,
+    iconTheme: IconThemeData(color: Colors.grey[700]),
+    titleTextStyle: TextStyle(color: Colors.grey[700], fontSize: 20),
+  ),
+  navigationRailTheme:
+      const NavigationRailThemeData(backgroundColor: Colors.white),
+);
 
 ThemeData dark = ThemeData(
-    primarySwatch: Colors.deepOrange,
-    brightness: Brightness.dark,
-    backgroundColor: Colors.black26,
-    canvasColor: Colors.grey[900],
-    accentColor: Color.fromRGBO(156, 45, 11, 1),
-    primaryColor: Colors.deepOrange,
-    appBarTheme: AppBarTheme(
-        brightness: Brightness.dark,
-        color: Colors.grey[900],
-        iconTheme: IconThemeData(color: Colors.grey[50]),
-        textTheme: TextTheme(
-            headline6: TextStyle(color: Colors.grey[50], fontSize: 20))),
-    navigationRailTheme:
-        NavigationRailThemeData(backgroundColor: Colors.grey[900]));
+  primarySwatch: Colors.deepOrange,
+  brightness: Brightness.dark,
+  backgroundColor: Colors.black26,
+  canvasColor: Colors.grey[900],
+  primaryColor: Colors.deepOrange,
+  appBarTheme: AppBarTheme(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
+    ),
+    color: Colors.grey[900],
+    iconTheme: IconThemeData(color: Colors.grey[50]),
+    titleTextStyle: TextStyle(color: Colors.grey[50], fontSize: 20),
+  ),
+  navigationRailTheme:
+      NavigationRailThemeData(backgroundColor: Colors.grey[900]),
+);
 
 class ThemeNotifier extends ChangeNotifier {
   final String key = "theme";
@@ -64,30 +71,32 @@ class ThemeNotifier extends ChangeNotifier {
   }
 
   _initPrefs() async {
-    if (_prefs == null) _prefs = await SharedPreferences.getInstance();
+    _prefs ??= await SharedPreferences.getInstance();
   }
 
   _loadFromPrefs() async {
     await _initPrefs();
     int t = _prefs!.getInt(key) ?? 0;
-    if (t == 1)
+    if (t == 1) {
       _appTheme = AppTheme.light;
-    else if (t == 2)
+    } else if (t == 2) {
       _appTheme = AppTheme.dark;
-    else
+    } else {
       _appTheme = AppTheme.auto;
+    }
     notifyListeners();
   }
 
   _saveToPrefs() async {
     await _initPrefs();
     int t;
-    if (_appTheme == AppTheme.light)
+    if (_appTheme == AppTheme.light) {
       t = 1;
-    else if (_appTheme == AppTheme.dark)
+    } else if (_appTheme == AppTheme.dark) {
       t = 2;
-    else
+    } else {
       t = 0;
+    }
     _prefs!.setInt(key, t);
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:play_paattu/widgets/album_card.dart';
-
+import '../widgets/album_card.dart';
 import 'recents.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -35,9 +36,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        if (recentAlbums.length > 0)
+        if (recentAlbums.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+            padding: const EdgeInsets.only(left: 15.0, right: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -46,24 +47,24 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 TextButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => RecentsPage())),
-                  child: Text("VIEW ALL"),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RecentsPage())),
+                  child: const Text("VIEW ALL"),
                 )
               ],
             ),
           ),
-        Container(
-          child: GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            childAspectRatio: 0.8,
-            children: recentAlbums
-                .map((e) =>
-                    AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
-                .toList(),
-          ),
+        GridView.count(
+          padding: const EdgeInsets.only(left: 5, right: 5),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: 2,
+          childAspectRatio: 0.8,
+          children: recentAlbums
+              .map((e) => AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
+              .toList(),
         )
       ],
     );

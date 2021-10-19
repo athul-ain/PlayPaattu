@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -15,7 +17,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: const Text("Settings"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -24,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   child: Text(
                     "Theme",
                     style: TextStyle(
@@ -38,16 +40,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 Consumer<ThemeNotifier>(
                   builder: (context, notifier, child) {
                     String _currenttheme;
-                    if (notifier.appTheme == AppTheme.light)
+                    if (notifier.appTheme == AppTheme.light) {
                       _currenttheme = "Light";
-                    else if (notifier.appTheme == AppTheme.dark)
+                    } else if (notifier.appTheme == AppTheme.dark) {
                       _currenttheme = "Dark";
-                    else
+                    } else {
                       _currenttheme = "System default";
+                    }
 
                     return ListTile(
-                      leading: Icon(Icons.nights_stay_rounded),
-                      title: Text("Choose theme"),
+                      leading: const Icon(Icons.nights_stay_rounded),
+                      title: const Text("Choose theme"),
                       subtitle: Text(_currenttheme),
                       onTap: () {
                         showDialog<void>(
@@ -55,16 +58,17 @@ class _SettingsPageState extends State<SettingsPage> {
                           barrierDismissible: false,
                           builder: (BuildContext context) {
                             int value;
-                            if (notifier.appTheme == AppTheme.light)
+                            if (notifier.appTheme == AppTheme.light) {
                               value = 2;
-                            else if (notifier.appTheme == AppTheme.dark)
+                            } else if (notifier.appTheme == AppTheme.dark) {
                               value = 3;
-                            else
+                            } else {
                               value = 1;
+                            }
 
                             return AlertDialog(
-                              title: Text('Choose theme'),
-                              content: Container(
+                              title: const Text('Choose theme'),
+                              content: SizedBox(
                                 height: 145,
                                 width: 800,
                                 child: Column(
@@ -72,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     RadioListTile(
                                       value: 1,
                                       dense: true,
-                                      title: Text("System default"),
+                                      title: const Text("System default"),
                                       groupValue: value,
                                       onChanged: (val) {
                                         notifier.setAutoTheme();
@@ -81,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     RadioListTile(
                                       value: 2,
                                       dense: true,
-                                      title: Text("Light"),
+                                      title: const Text("Light"),
                                       groupValue: value,
                                       onChanged: (val) {
                                         notifier.setLightTheme();
@@ -90,7 +94,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                     RadioListTile(
                                       value: 3,
                                       dense: true,
-                                      title: Text("Dark"),
+                                      title: const Text("Dark"),
                                       groupValue: value,
                                       onChanged: (val) {
                                         notifier.setDarkTheme();
@@ -101,7 +105,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               ),
                               actions: [
                                 TextButton(
-                                  child: Text('DONE'),
+                                  child: const Text('DONE'),
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
                               ],
@@ -112,9 +116,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     );
                   },
                 ),
-                Divider(),
+                const Divider(),
                 Padding(
-                  padding: EdgeInsets.all(11),
+                  padding: const EdgeInsets.all(11),
                   child: Text(
                     "About",
                     style: TextStyle(
@@ -126,43 +130,44 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ),
                 ListTile(
-                  title: Text("Share app"),
-                  leading: Icon(Icons.share_outlined),
+                  title: const Text("Share app"),
+                  leading: const Icon(Icons.share_outlined),
                   onTap: () {
                     Share.share(
                         'Hey, I have Found a new awesome Music Player App Play Paattu, Check it out on Play Store https://play.google.com/store/apps/details?id=app.paattu.play');
                   },
                 ),
                 ListTile(
-                  title: Text("Rate us"),
-                  leading: Icon(Icons.rate_review_outlined),
+                  title: const Text("Rate us"),
+                  leading: const Icon(Icons.rate_review_outlined),
                   onTap: () => openUrl("market://details?id=app.paattu.play"),
                 ),
                 ListTile(
-                  title: Text("More apps"),
-                  leading: Icon(Icons.apps_rounded),
+                  title: const Text("More apps"),
+                  leading: const Icon(Icons.apps_rounded),
                   onTap: () => openUrl("https://paattu.in/apps"),
                 ),
                 ListTile(
-                  title: Text("Contact us"),
-                  leading: Icon(Icons.contact_page_outlined),
+                  title: const Text("Contact us"),
+                  leading: const Icon(Icons.contact_page_outlined),
                   onTap: () => openUrl("https://paattu.in/contact"),
                 ),
                 ListTile(
-                  title: Text("Visit Website"),
-                  leading: Icon(Icons.web_rounded),
+                  title: const Text("Visit Website"),
+                  leading: const Icon(Icons.web_rounded),
                   onTap: () => openUrl("https://paattu.in"),
                 ),
-                Divider(),
+                const Divider(),
               ],
             ),
             FutureBuilder<PackageInfo>(
               future: PackageInfo.fromPlatform(),
               builder: (context, snapshot) {
-                if (snapshot.hasData)
+                if (snapshot.hasData) {
                   return SafeArea(
                     child: Text("Version : ${snapshot.data!.version}"),
                   );
+                }
 
                 return Container();
               },
@@ -175,8 +180,9 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 openUrl(url) async {
-  if (await canLaunch(url))
+  if (await canLaunch(url)) {
     await launch(url);
-  else
+  } else {
     throw 'Could not launch $url';
+  }
 }

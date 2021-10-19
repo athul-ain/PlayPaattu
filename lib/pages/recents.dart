@@ -3,6 +3,8 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:play_paattu/widgets/album_card.dart';
 
 class RecentsPage extends StatefulWidget {
+  const RecentsPage({Key? key}) : super(key: key);
+
   @override
   _RecentsPageState createState() => _RecentsPageState();
 }
@@ -33,10 +35,10 @@ class _RecentsPageState extends State<RecentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Recents")),
+      appBar: AppBar(title: const Text("Recents")),
       body: Scrollbar(
         thickness: 8,
-        radius: Radius.circular(5),
+        radius: const Radius.circular(5),
         controller: controller,
         isAlwaysShown: true,
         child: GridView.count(

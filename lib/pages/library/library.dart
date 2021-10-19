@@ -5,6 +5,8 @@ import 'songs.dart';
 import 'albums.dart';
 
 class LibraryPage extends StatefulWidget {
+  const LibraryPage({Key? key}) : super(key: key);
+
   @override
   _LibraryPageState createState() => _LibraryPageState();
 }
@@ -16,14 +18,12 @@ class _LibraryPageState extends State<LibraryPage> {
       initialIndex: 2,
       length: 4,
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
         appBar: AppBar(
           title: TabBar(
             indicatorColor: Theme.of(context).primaryColor,
             labelColor: Theme.of(context).primaryColor,
             unselectedLabelColor: Theme.of(context).textTheme.bodyText1!.color,
-            tabs: [
+            tabs: const [
               Tab(text: "Genre"),
               Tab(text: "Artists"),
               Tab(text: "Albums"),
@@ -35,8 +35,8 @@ class _LibraryPageState extends State<LibraryPage> {
           children: [
             GenreLibraryPage(),
             ArtistsLibraryPage(),
-            AlbumsLibraryPage(),
-            SongsLibraryPage(),
+            const AlbumsLibraryPage(),
+            const SongsLibraryPage(),
           ],
         ),
       ),

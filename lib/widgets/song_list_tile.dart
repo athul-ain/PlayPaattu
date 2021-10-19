@@ -4,8 +4,8 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../utils/duration_parser.dart';
 
-class SongListTileWidget extends StatelessWidget {
-  SongListTileWidget({
+class SongListTileWidget extends StatefulWidget {
+  const SongListTileWidget({
     Key? key,
     required this.sdkVersion,
     required this.thisSong,
@@ -16,24 +16,29 @@ class SongListTileWidget extends StatelessWidget {
   final SongModel thisSong;
   final int? index;
 
+  @override
+  State<SongListTileWidget> createState() => _SongListTileWidgetState();
+}
+
+class _SongListTileWidgetState extends State<SongListTileWidget> {
   AudioPlayer player = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(thisSong.title),
+      title: Text(widget.thisSong.title),
       subtitle: Text(
-          "${thisSong.artist} • ${durationToMinutesSeconds(thisSong.duration)}"),
-      leading: index != null
+          "${widget.thisSong.artist} • ${durationToMinutesSeconds(widget.thisSong.duration)}"),
+      leading: widget.index != null
           ? Padding(
               padding: const EdgeInsets.only(left: 21),
-              child: Text("$index"),
+              child: Text("${widget.index}"),
             )
           : Card(
               clipBehavior: Clip.antiAlias,
               child: QueryArtworkWidget(
                 artworkBorder: BorderRadius.circular(0),
-                id: thisSong.id,
+                id: widget.thisSong.id,
                 type: ArtworkType.AUDIO,
                 artworkQuality: FilterQuality.low,
                 nullArtworkWidget: Container(
@@ -46,15 +51,15 @@ class SongListTileWidget extends StatelessWidget {
                     size: 30,
                   ),
                 ),
-                artwork: thisSong.artwork,
-                deviceSDK: sdkVersion,
+                artwork: widget.thisSong.artwork,
+                deviceSDK: widget.sdkVersion,
               ),
             ),
       onTap: () {
-        print("playing ${thisSong.data}");
+        print("playing ${widget.thisSong.data}");
 
         AudioSource.uri(
-          Uri.parse(thisSong.data),
+          Uri.parse(widget.thisSong.data),
           tag: MediaItem(
             // Specify a unique ID for each media item:
             id: '1',

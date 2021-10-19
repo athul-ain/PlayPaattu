@@ -12,17 +12,24 @@ Future<void> main() async {
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 
+  bool isDarkMode =
+      WidgetsBinding.instance!.platformDispatcher.platformBrightness ==
+          Brightness.dark;
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
     systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness:
+        isDarkMode ? Brightness.light : Brightness.dark,
+    systemNavigationBarContrastEnforced: true,
   ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

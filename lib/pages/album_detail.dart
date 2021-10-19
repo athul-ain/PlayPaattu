@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:play_paattu/widgets/song_list_tile.dart';
 
@@ -27,11 +28,12 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
     List<SongModel> _songs = await OnAudioQuery()
         .queryAudiosFrom(AudiosFromType.ALBUM_ID, widget.thisAlbum.albumId);
 
-    if (mounted)
+    if (mounted) {
       setState(() {
         sdkVersion = deviceInfo.sdk;
         songs = _songs;
       });
+    }
   }
 
   @override
@@ -64,15 +66,17 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
             expandedHeight: MediaQuery.of(context).size.width < 360
                 ? MediaQuery.of(context).size.width
                 : 360,
-            brightness: Brightness.dark,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.dark,
+            ),
             backgroundColor: Theme.of(context).backgroundColor,
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
                 tag: widget.thisAlbum.albumId,
                 child: ShaderMask(
                   shaderCallback: (rect) {
-                    return LinearGradient(
+                    return const LinearGradient(
                       stops: [0.36, 0.93],
                       begin: Alignment.topCenter,
                       end: Alignment.center,
@@ -83,7 +87,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                   },
                   blendMode: BlendMode.luminosity,
                   child: Container(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     child: QueryArtworkWidget(
                       artworkBorder: BorderRadius.circular(0),
                       id: widget.thisAlbum.albumId,
@@ -117,12 +121,12 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                         ),
                       ),
                       title: Text(
-                        songs.length == 0 ? "" : songs[0].album,
-                        style: TextStyle(
+                        songs.isEmpty ? "" : songs[0].album,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      subtitle: Text(songs.length == 0
+                      subtitle: Text(songs.isEmpty
                           ? ""
                           : songs.length.toString() + " Songs"),
                     )

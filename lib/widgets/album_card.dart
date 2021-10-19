@@ -15,7 +15,7 @@ class AlbumCartWidget extends StatelessWidget {
     return Hero(
       tag: thisAlbum.id,
       child: Card(
-        margin: EdgeInsets.all(3.8),
+        margin: const EdgeInsets.all(3.8),
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

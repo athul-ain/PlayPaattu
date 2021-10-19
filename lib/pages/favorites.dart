@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({Key? key}) : super(key: key);
+
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
 }
@@ -8,7 +10,7 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text("Not Implemented"),
     );
   }

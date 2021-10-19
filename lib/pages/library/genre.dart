@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class GenreLibraryPage extends StatefulWidget {
+  const GenreLibraryPage({Key? key}) : super(key: key);
+
   @override
   _GenreLibraryPageState createState() => _GenreLibraryPageState();
 }
@@ -21,11 +23,12 @@ class _GenreLibraryPageState extends State<GenreLibraryPage> {
 
     List<GenreModel> _genres = await OnAudioQuery().queryGenres();
 
-    if (mounted)
+    if (mounted) {
       setState(() {
         sdkVersion = deviceInfo.sdk;
         genres = _genres;
       });
+    }
   }
 
   @override
