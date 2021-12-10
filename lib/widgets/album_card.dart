@@ -14,26 +14,25 @@ class AlbumCartWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: thisAlbum.id,
-      child: Card(
-        margin: const EdgeInsets.all(3.8),
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Expanded(
+      child: Stack(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: QueryArtworkWidget(
                     id: thisAlbum.id,
                     type: ArtworkType.ALBUM,
                     artworkQuality: FilterQuality.medium,
-                    artworkBorder: BorderRadius.circular(0),
+                    artworkBorder: BorderRadius.circular(8),
                     nullArtworkWidget: Container(
-                      color: Colors.black12,
-                      //color: Colors.black26,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[200],
+                      ),
+                      // color: Colors.black12,
                       child: Icon(
                         Icons.album,
                         color: Colors.grey[700],
@@ -42,41 +41,40 @@ class AlbumCartWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        thisAlbum.album,
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        thisAlbum.artist ?? "",
-                        overflow: TextOverflow.fade,
-                        softWrap: false,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                    ],
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      thisAlbum.album,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    Text(
+                      thisAlbum.artist ?? "",
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            InkWell(
-              splashColor: Colors.black38,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AlbumDetailPage(thisAlbum: thisAlbum),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AlbumDetailPage(thisAlbum: thisAlbum),
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }

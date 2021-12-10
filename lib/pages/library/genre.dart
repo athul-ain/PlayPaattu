@@ -19,13 +19,10 @@ class _GenreLibraryPageState extends State<GenreLibraryPage> {
   }
 
   Future<void> getGenreAlbums() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-
     List<GenreModel> _genres = await OnAudioQuery().queryGenres();
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.version;
         genres = _genres;
       });
     }

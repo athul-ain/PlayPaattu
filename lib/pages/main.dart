@@ -30,13 +30,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
-    getSdkVersion();
     super.initState();
-  }
-
-  getSdkVersion() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-    if (mounted) setState(() => sdkVersion = deviceInfo.version);
   }
 
   @override

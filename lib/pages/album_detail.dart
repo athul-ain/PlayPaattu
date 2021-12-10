@@ -12,7 +12,6 @@ class AlbumDetailPage extends StatefulWidget {
 }
 
 class _AlbumDetailPageState extends State<AlbumDetailPage> {
-  int sdkVersion = 0;
   List<SongModel> songs = [];
 
   @override
@@ -22,14 +21,11 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
   }
 
   Future<void> getSongs() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-
     List<SongModel> _songs = await OnAudioQuery()
         .queryAudiosFrom(AudiosFromType.ALBUM_ID, widget.thisAlbum.id);
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.version;
         songs = _songs;
       });
     }
@@ -131,7 +127,6 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                   List.generate(
                     songs.length,
                     (index) => SongListTileWidget(
-                      sdkVersion: sdkVersion,
                       thisSong: songs[index],
                       index: index + 1,
                     ),

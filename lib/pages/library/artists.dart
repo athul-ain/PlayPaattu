@@ -19,13 +19,10 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
   }
 
   Future<void> getRecentArtists() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-
     List<ArtistModel> _recentArtists = await OnAudioQuery().queryArtists();
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.version;
         recentArtists = _recentArtists;
       });
     }

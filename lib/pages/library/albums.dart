@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../../widgets/album_card.dart';
@@ -20,13 +22,13 @@ class _AlbumsLibraryPageState extends State<AlbumsLibraryPage> {
   }
 
   Future<void> getRecentAlbums() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
+    log("message");
 
-    List<AlbumModel> _recentAlbums = await OnAudioQuery().queryAlbums();
+    List<AlbumModel> _recentAlbums =
+        await OnAudioQuery().queryAlbums(sortType: AlbumSortType.ALBUM);
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.version;
         recentAlbums = _recentAlbums;
       });
     }

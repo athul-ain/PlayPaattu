@@ -7,12 +7,10 @@ import '../utils/duration_parser.dart';
 class SongListTileWidget extends StatefulWidget {
   const SongListTileWidget({
     Key? key,
-    required this.sdkVersion,
     required this.thisSong,
     this.index,
   }) : super(key: key);
 
-  final int sdkVersion;
   final SongModel thisSong;
   final int? index;
 

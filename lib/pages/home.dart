@@ -21,12 +21,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getRecentAlbums() async {
-    DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-
     List<AlbumModel> _recentAlbums = await OnAudioQuery().queryAlbums();
 
     setState(() {
-      sdkVersion = deviceInfo.version;
       recentAlbums = _recentAlbums;
     });
   }
