@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         builder: (context, ThemeNotifier notifier, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: AppData.APP_NAME,
+            title: appData.appName,
             theme: notifier.appTheme == AppTheme.dark ? dark : light,
             darkTheme: notifier.appTheme == AppTheme.auto ? dark : null,
             home: const MainScreen(),

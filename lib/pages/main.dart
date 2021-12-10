@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:play_paattu/utils/app_data.dart';
 //import 'package:play_paattu/widgets/navbar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'favorites.dart';
@@ -72,17 +73,17 @@ class _MainScreenState extends State<MainScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              stops: const [0.88, 0.95, 1],
+              stops: const [0.50, 0.8, 1],
               colors: [
-                Theme.of(context).appBarTheme.backgroundColor!,
-                Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.5),
-                Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.1),
+                Theme.of(context).scaffoldBackgroundColor,
+                Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                Theme.of(context).scaffoldBackgroundColor.withOpacity(0),
               ],
             ),
           ),
         ),
         title: Card(
-          color: Colors.deepOrange[100],
+          color: Theme.of(context).appBarTheme.backgroundColor,
           clipBehavior: Clip.antiAlias,
           elevation: 0.1,
           shape: RoundedRectangleBorder(
@@ -139,24 +140,8 @@ class _MainScreenState extends State<MainScreen> {
         child: ListView(
           children: [
             SafeArea(
-              child: ListTile(
-                title: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                Theme.of(context).appBarTheme.iconTheme!.color),
-                        text: "Play "),
-                    TextSpan(
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryColor),
-                        text: "Paattu"),
-                  ]),
-                ),
+              child: Text(
+                appData.appName,
               ),
             ),
             InkWell(
@@ -215,8 +200,6 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Theme.of(context).primaryColorLight,
-        height: 70,
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),

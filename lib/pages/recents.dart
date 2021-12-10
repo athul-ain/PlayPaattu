@@ -11,7 +11,6 @@ class RecentsPage extends StatefulWidget {
 
 class _RecentsPageState extends State<RecentsPage> {
   ScrollController controller = ScrollController();
-  int sdkVersion = 0;
   List<AlbumModel> recentAlbums = [];
 
   @override
@@ -33,17 +32,14 @@ class _RecentsPageState extends State<RecentsPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Recents")),
       body: Scrollbar(
-        thickness: 8,
-        radius: const Radius.circular(5),
         controller: controller,
         isAlwaysShown: true,
         child: GridView.count(
           controller: controller,
           crossAxisCount: 2,
           childAspectRatio: 0.8,
-          children: recentAlbums
-              .map((e) => AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
-              .toList(),
+          children:
+              recentAlbums.map((e) => AlbumCardWidget(thisAlbum: e)).toList(),
         ),
       ),
     );

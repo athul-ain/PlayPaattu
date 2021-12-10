@@ -31,26 +31,32 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+      padding: EdgeInsets.only(
+        left: 5.0,
+        right: 5.0,
+        bottom: MediaQuery.of(context).padding.bottom,
+      ),
       crossAxisCount: 2,
       childAspectRatio: 0.8,
       children: recentArtists
           .map((thisArtist) => Padding(
                 padding: const EdgeInsets.all(3),
-                child: Card(
-                  margin: const EdgeInsets.all(0),
-                  clipBehavior: Clip.antiAlias,
-                  child: Stack(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: QueryArtworkWidget(
                               id: thisArtist.id,
                               type: ArtworkType.ALBUM,
                               nullArtworkWidget: Container(
-                                color: Colors.black26,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey[300],
+                                ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(18.0),
                                   child: Icon(
@@ -60,30 +66,28 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
                                   ),
                                 ),
                               ),
+                              artworkBorder: BorderRadius.circular(8),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  thisArtist.artist,
-                                  overflow: TextOverflow.fade,
-                                  softWrap: false,
-                                  style: Theme.of(context).textTheme.bodyText1,
-                                ),
-                              ],
-                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                thisArtist.artist,
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      InkWell(
-                        splashColor: Colors.black38,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    GestureDetector(onTap: () {}),
+                  ],
                 ),
               ))
           .toList(),

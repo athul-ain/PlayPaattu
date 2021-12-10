@@ -13,13 +13,14 @@ ThemeData light = ThemeData(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.dark,
     ),
-    color: Colors.white,
-    elevation: 1.5,
-    iconTheme: IconThemeData(color: Colors.grey[700]),
-    titleTextStyle: TextStyle(color: Colors.grey[700], fontSize: 20),
+    elevation: 0,
+    color: Colors.deepOrange[50],
   ),
   navigationRailTheme:
       const NavigationRailThemeData(backgroundColor: Colors.white),
+  navigationBarTheme: NavigationBarThemeData(
+    backgroundColor: Colors.deepOrange[50],
+  ),
 );
 
 ThemeData dark = ThemeData(

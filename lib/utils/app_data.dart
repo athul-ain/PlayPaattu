@@ -1,4 +1,6 @@
 class AppData {
   // ignore: constant_identifier_names
-  static const String APP_NAME = "Play Paattu";
+  final String appName = "Play Paattu";
 }
+
+AppData appData = AppData();

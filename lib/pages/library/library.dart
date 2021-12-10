@@ -19,9 +19,13 @@ class _LibraryPageState extends State<LibraryPage> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 1,
+          titleSpacing: 0,
           title: TabBar(
-            indicatorColor: Theme.of(context).primaryColor,
-            labelColor: Theme.of(context).primaryColor,
+            indicatorColor: Theme.of(context).primaryColorDark,
+            labelColor: Theme.of(context).primaryColorDark,
             unselectedLabelColor: Theme.of(context).textTheme.bodyText1!.color,
             tabs: const [
               Tab(text: "Genre"),

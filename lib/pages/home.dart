@@ -11,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int sdkVersion = 0;
   List<AlbumModel> recentAlbums = [];
 
   @override
@@ -58,9 +57,8 @@ class _HomePageState extends State<HomePage> {
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           childAspectRatio: 0.8,
-          children: recentAlbums
-              .map((e) => AlbumCartWidget(thisAlbum: e, sdkVersion: sdkVersion))
-              .toList(),
+          children:
+              recentAlbums.map((e) => AlbumCardWidget(thisAlbum: e)).toList(),
         )
       ],
     );
