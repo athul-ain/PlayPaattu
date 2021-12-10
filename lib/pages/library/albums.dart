@@ -26,7 +26,7 @@ class _AlbumsLibraryPageState extends State<AlbumsLibraryPage> {
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.sdk;
+        sdkVersion = deviceInfo.version;
         recentAlbums = _recentAlbums;
       });
     }

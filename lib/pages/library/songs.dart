@@ -22,11 +22,11 @@ class _SongsLibraryPageState extends State<SongsLibraryPage> {
   getAllSongs() async {
     DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
     if (mounted) setState(() => isLoading = true);
-    var _audios = await OnAudioQuery().queryAudios();
+    var _audios = await OnAudioQuery().querySongs();
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.sdk;
+        sdkVersion = deviceInfo.version;
         allSongs = _audios;
         isLoading = false;
       });

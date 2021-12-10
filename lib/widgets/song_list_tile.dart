@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import '../utils/duration_parser.dart';
 
@@ -28,7 +28,7 @@ class _SongListTileWidgetState extends State<SongListTileWidget> {
     return ListTile(
       title: Text(widget.thisSong.title),
       subtitle: Text(
-          "${widget.thisSong.artist} • ${durationToMinutesSeconds(widget.thisSong.duration)}"),
+          "${widget.thisSong.artist} • ${durationToMinutesSeconds(widget.thisSong.duration!)}"),
       leading: widget.index != null
           ? Padding(
               padding: const EdgeInsets.only(left: 21),
@@ -51,24 +51,24 @@ class _SongListTileWidgetState extends State<SongListTileWidget> {
                     size: 30,
                   ),
                 ),
-                artwork: widget.thisSong.artwork,
-                deviceSDK: widget.sdkVersion,
               ),
             ),
       onTap: () {
-        print("playing ${widget.thisSong.data}");
+        if (kDebugMode) {
+          print("playing ${widget.thisSong.data}");
+        }
 
-        AudioSource.uri(
-          Uri.parse(widget.thisSong.data),
-          tag: MediaItem(
-            // Specify a unique ID for each media item:
-            id: '1',
-            // Metadata to display in the notification:
-            album: "Album name",
-            title: "Song name",
-            artUri: Uri.parse('https://example.com/albumart.jpg'),
-          ),
-        );
+        // AudioSource.uri(
+        //   Uri.parse(widget.thisSong.data),
+        //   tag: MediaItem(
+        //     // Specify a unique ID for each media item:
+        //     id: '1',
+        //     // Metadata to display in the notification:
+        //     album: "Album name",
+        //     title: "Song name",
+        //     artUri: Uri.parse('https://example.com/albumart.jpg'),
+        //   ),
+        // );
       },
     );
   }

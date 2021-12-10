@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -26,11 +25,11 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
     DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
     List<SongModel> _songs = await OnAudioQuery()
-        .queryAudiosFrom(AudiosFromType.ALBUM_ID, widget.thisAlbum.albumId);
+        .queryAudiosFrom(AudiosFromType.ALBUM_ID, widget.thisAlbum.id);
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.sdk;
+        sdkVersion = deviceInfo.version;
         songs = _songs;
       });
     }
@@ -73,7 +72,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
             iconTheme: const IconThemeData(color: Colors.white),
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
-                tag: widget.thisAlbum.albumId,
+                tag: widget.thisAlbum.id,
                 child: ShaderMask(
                   shaderCallback: (rect) {
                     return const LinearGradient(
@@ -90,7 +89,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                     padding: const EdgeInsets.all(0),
                     child: QueryArtworkWidget(
                       artworkBorder: BorderRadius.circular(0),
-                      id: widget.thisAlbum.albumId,
+                      id: widget.thisAlbum.id,
                       type: ArtworkType.ALBUM,
                       artworkQuality: FilterQuality.high,
                       nullArtworkWidget: Container(
@@ -101,8 +100,6 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                           size: 188,
                         ),
                       ),
-                      artwork: widget.thisAlbum.artwork,
-                      deviceSDK: sdkVersion,
                     ),
                   ),
                 ),
@@ -121,7 +118,7 @@ class _AlbumDetailPageState extends State<AlbumDetailPage> {
                         ),
                       ),
                       title: Text(
-                        songs.isEmpty ? "" : songs[0].album,
+                        songs.isEmpty ? "" : songs[0].album ?? "",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

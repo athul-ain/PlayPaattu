@@ -27,7 +27,7 @@ class AlbumCartWidget extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: QueryArtworkWidget(
-                    id: thisAlbum.albumId,
+                    id: thisAlbum.id,
                     type: ArtworkType.ALBUM,
                     artworkQuality: FilterQuality.medium,
                     artworkBorder: BorderRadius.circular(0),
@@ -40,8 +40,6 @@ class AlbumCartWidget extends StatelessWidget {
                         size: 133,
                       ),
                     ),
-                    artwork: thisAlbum.artwork,
-                    deviceSDK: sdkVersion,
                   ),
                 ),
                 Padding(
@@ -50,13 +48,13 @@ class AlbumCartWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        thisAlbum.albumName,
+                        thisAlbum.album,
                         overflow: TextOverflow.fade,
                         softWrap: false,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                       Text(
-                        thisAlbum.artist,
+                        thisAlbum.artist ?? "",
                         overflow: TextOverflow.fade,
                         softWrap: false,
                         style: Theme.of(context).textTheme.caption,

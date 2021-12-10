@@ -25,7 +25,7 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.sdk;
+        sdkVersion = deviceInfo.version;
         recentArtists = _recentArtists;
       });
     }
@@ -63,8 +63,6 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
                                   ),
                                 ),
                               ),
-                              artwork: thisArtist.artwork,
-                              deviceSDK: sdkVersion,
                             ),
                           ),
                           Padding(
@@ -73,7 +71,7 @@ class _ArtistsLibraryPageState extends State<ArtistsLibraryPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  thisArtist.artistName,
+                                  thisArtist.artist,
                                   overflow: TextOverflow.fade,
                                   softWrap: false,
                                   style: Theme.of(context).textTheme.bodyText1,

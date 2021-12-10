@@ -25,7 +25,7 @@ class _GenreLibraryPageState extends State<GenreLibraryPage> {
 
     if (mounted) {
       setState(() {
-        sdkVersion = deviceInfo.sdk;
+        sdkVersion = deviceInfo.version;
         genres = _genres;
       });
     }
@@ -46,7 +46,7 @@ class _GenreLibraryPageState extends State<GenreLibraryPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(13),
                   child: Text(
-                    e.genreName,
+                    e.genre,
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme

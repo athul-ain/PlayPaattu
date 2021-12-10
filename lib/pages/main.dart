@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:on_audio_query/on_audio_query.dart';
-import 'package:play_paattu/widgets/navbar.dart';
+//import 'package:play_paattu/widgets/navbar.dart';
 import 'package:share_plus/share_plus.dart';
 import 'favorites.dart';
 import 'playlists.dart';
@@ -22,10 +22,10 @@ class _MainScreenState extends State<MainScreen> {
   int sdkVersion = 0;
   int selectedPage = 0;
   List mainPages = [
-    HomePage(),
-    FavoritesPage(),
+    const HomePage(),
+    const FavoritesPage(),
     const PlaylistsPage(),
-    LibraryPage(),
+    const LibraryPage(),
   ];
 
   @override
@@ -36,15 +36,12 @@ class _MainScreenState extends State<MainScreen> {
 
   getSdkVersion() async {
     DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
-    if (mounted) setState(() => sdkVersion = deviceInfo.sdk);
+    if (mounted) setState(() => sdkVersion = deviceInfo.version);
   }
 
   @override
   Widget build(BuildContext context) {
     SongModel? currentSong;
-    //Provider.of<MusicService>(context).nowPlayingSong;
-    bool isPlaying = false;
-    // Provider.of<MusicService>(context).isPlaying;
 
     return Scaffold(
       extendBody: true,
@@ -227,25 +224,25 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: Theme.of(context).primaryColorLight,
         height: 70,
         destinations: const [
-          NavigationBarDestination(
+          NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
             label: "Home",
             tooltip: "Home",
           ),
-          NavigationBarDestination(
+          NavigationDestination(
             icon: Icon(Icons.favorite_border_rounded),
             selectedIcon: Icon(Icons.favorite_rounded),
             label: "Favorites",
             tooltip: "Favorites",
           ),
-          NavigationBarDestination(
+          NavigationDestination(
             icon: Icon(Icons.playlist_play_outlined),
             selectedIcon: Icon(Icons.playlist_play_rounded),
             label: "Playlists",
             tooltip: "Playlists",
           ),
-          NavigationBarDestination(
+          NavigationDestination(
             icon: Icon(Icons.my_library_music_outlined),
             selectedIcon: Icon(Icons.my_library_music_rounded),
             label: "Library",
@@ -253,7 +250,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
         selectedIndex: selectedPage,
-        labelBehavior: NavigationBarDestinationLabelBehavior.alwaysShow,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         onDestinationSelected: (value) {
           setState(() => selectedPage = value);
         },
@@ -286,8 +283,6 @@ class _MainScreenState extends State<MainScreen> {
                           size: 30,
                         ),
                       ),
-                      artwork: currentSong.artwork,
-                      deviceSDK: sdkVersion,
                     ),
                   ),
                   Container(width: 10),
@@ -302,26 +297,16 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         Container(height: 3),
                         Text(
-                          currentSong.artist,
+                          currentSong.artist ?? "",
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                       ],
                     ),
                   ),
                   IconButton(
-                      icon: Icon(
-                        isPlaying
-                            ? Icons.pause_outlined
-                            : Icons.play_arrow_outlined,
-                      ),
+                      icon: const Icon(Icons.play_arrow_outlined),
                       onPressed: () {
-                        // if (isPlaying) {
-                        //   Provider.of<MusicService>(context, listen: false)
-                        //       .pauseSong(currentSong);
-                        // } else {
-                        //   Provider.of<MusicService>(context, listen: false)
-                        //       .resumeSong();
-                        // }
+                        //TODO: Play
                       })
                 ],
               ),

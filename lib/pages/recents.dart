@@ -23,11 +23,10 @@ class _RecentsPageState extends State<RecentsPage> {
   Future<void> getRecentAlbums() async {
     DeviceModel deviceInfo = await OnAudioQuery().queryDeviceInfo();
 
-    List<AlbumModel> _recentAlbums = await OnAudioQuery()
-        .queryAlbums(AlbumSortType.LAST_YEAR, null, null, true);
+    List<AlbumModel> _recentAlbums = await OnAudioQuery().queryAlbums();
 
     setState(() {
-      sdkVersion = deviceInfo.sdk;
+      sdkVersion = deviceInfo.version;
       recentAlbums = _recentAlbums;
     });
   }

@@ -31,12 +31,12 @@ class _LibraryPageState extends State<LibraryPage> {
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             GenreLibraryPage(),
             ArtistsLibraryPage(),
-            const AlbumsLibraryPage(),
-            const SongsLibraryPage(),
+            AlbumsLibraryPage(),
+            SongsLibraryPage(),
           ],
         ),
       ),
